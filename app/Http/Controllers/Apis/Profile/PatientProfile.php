@@ -78,7 +78,7 @@ class PatientProfile extends Controller
 
         //__remove image__
         if ($patient->profile_photo) {
-            Storage::disk('public/patients')->delete($patient->profile_photo);
+            Storage::disk('public/patients')->delete($patient->profile_images);
         }
 
         //__delete records__
