@@ -114,9 +114,9 @@ class DoctorProfile extends Controller
     });
     //remove photos
      $professionalLicence = ProfessionalLicence::Find($doctor->id)
-    Storage::delete($doctor->profile_image::delete($doctor->profile_image
+         Storage::disk('public/doctors')->delete($doctor->profile_image::delete($doctor->profile_image
       $doctor->verification_image,
-        $dictor->professional_licence
+        $doctor->professional_licence
                    );
     return $this->SuccessMessage('Account deleted successfully');
 }
