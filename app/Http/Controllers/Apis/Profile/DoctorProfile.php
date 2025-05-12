@@ -90,5 +90,35 @@ class DoctorProfile extends Controller
  
          return $this->SuccessMessage('Connection status updated successfully');
      }
+
+    public function deleteAccount()
+{
+    //__get auth___
+    $authUser = $this->getAuthUser();
+    $doctor = Doctor::find($authUser->id);
+
+    //__check active reservations__
+    $hasReservations = Reservation::where('doctor_id', $doctor->id)
+        ->where('status', 1)
+        ->exists();
+
+    if ($hasReservations) {
+        return $this->ErrorMessage([
+            'has_active_reservations' => 'You have active reservations and cannot delete your account'
+        ], 'Cannot delete account', 403);
+    }
+    //__delete from doctor & user__
+    DB::transaction(function () use ($authUser) {
+        Doctor::where('id', $authUser->id)->delete();
+        User::where('id', $authUser->id)->delete();
+    });
+    //remove photos
+     $professionalLicence = ProfessionalLicence::Find($doctor->id)
+    Storage::delete($doctor->profile_image::delete($doctor->profile_image
+      $doctor->verification_image,
+        $dictor->professional_licence
+                   );
+    return $this->SuccessMessage('Account deleted successfully');
+}
     
 }
